@@ -19,7 +19,7 @@ if (isset($_POST["btnLogin"])) {
             if ($user['accounttype'] == 'Admin') {
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['username'] = $username;
-                header("Location: add_car.php");
+                header("Location:cars.php");
                 exit();
             } 
         } else {
@@ -29,15 +29,39 @@ if (isset($_POST["btnLogin"])) {
         $errorMsg = "Invalid username!";
     }
 }
+
+function validatePassword($password){
+	
+
+	$valid = TRUE;
+	
+	if(!preg_match("/[a-z]/", $password)){
+		$valid = FALSE;
+	}  else if(!preg_match("/[0-9]/", $password)){
+		$valid = FALSE;
+	}
+	
+	return $valid;
+}
+
+
+
+
+
+
+
 ?>
 
 <html>
 <head>
     <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #2D3142;
-            font-family: Arial, sans-serif;
+            font-family:'Roboto' , sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -134,7 +158,7 @@ if (isset($_POST["btnLogin"])) {
         <input type="text" name="username"><br>
 
         <label>Password:</label>
-        <input type="password" name="password"><br>
+        <input type="text" name="password"><br>
 
         <button type="submit" name="btnLogin">Login</button>
         <button id="register-btn" onclick="location.href='register.php'" type="button">Register</button>

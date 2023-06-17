@@ -1,11 +1,10 @@
 <?php
 session_start();
 
-if(!isset($_SESSION["id"])){
-	header("location: login.php"); 
-	exit();
+if (!isset($_SESSION["id"])) {
+    header("location: login.php");
+    exit();
 }
-
 
 if (isset($_POST["btnSave"])) {
     require("dbconnect.php");
@@ -25,7 +24,7 @@ if (isset($_POST["btnSave"])) {
         echo "Please input a valid model!";
     } else if (empty($plateNum)) {
         echo "Please input a valid plate number!";
-    }  else if (empty($horsepower)) {
+    } else if (empty($horsepower)) {
         echo "Please input a valid horsepower!";
     } else if (empty($engine)) {
         echo "Please input a valid engine!";
@@ -36,75 +35,84 @@ if (isset($_POST["btnSave"])) {
     } else if (empty($fueltype)) {
         echo "Please input a valid fuel type!";
     } else {
+        if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
+            $imageData = file_get_contents($_FILES["image"]["tmp_name"]);
 
-        $carSql = "INSERT INTO tblcar (brand, model, plateNum,status_ ) VALUES (:brand, :model, :plateNum,:status_ )";
-        $carValues = array(
-            ":brand" => $brand,
-            ":model" => $model,
-            ":plateNum" => $plateNum,
-            ":status_" => $status_
+            $carSql = "INSERT INTO tblcar (brand, model, plateNum, status_, image) VALUES (:brand, :model, :plateNum, :status_, :image)";
+            $carValues = array(
+                ":brand" => $brand,
+                ":model" => $model,
+                ":plateNum" => $plateNum,
+                ":status_" => $status_,
+                ":image" => $imageData
+            );
+
+            $carResult = $conn->prepare($carSql);
+            $carResult->execute($carValues);
+
+            $carID = $conn->lastInsertId();
+
+            if ($carResult->rowCount() > 0) {
+                echo "Car record has been saved!";
+            } else {
+                echo "No car record has been saved!";
+            }
+
+            $carInfoSql = "INSERT INTO tblcar_info (carID, horsepower, engine_, transmission, seatcap, fueltype) VALUES (:carID, :horsepower, :engine, :transmission, :seatcap, :fueltype)";
+            $carInfoValues = array(
+                ":carID" => $carID,
+                ":horsepower" => $horsepower,
+                ":engine" => $engine,
+                ":transmission" => $transmission,
+                ":seatcap" => $seatcap,
+                ":fueltype" => $fueltype
+            );
+
+            $carInfoResult = $conn->prepare($carInfoSql);
+            $carInfoResult->execute($carInfoValues);
+
+            if ($carInfoResult->rowCount() > 0) {
+                echo "Car info record has been saved!";
+            } else {
+                echo "No car info record has been saved!";
+            }
+
+            $rentedCarsSql = "INSERT INTO rented_cars (car_id, user_id) VALUES (:carID, :userID)";
+            $rentedCarsValues = array(
+                ":carID" => $carID,
+                ":userID" => $_SESSION["id"]
+            );
+
+            $rentedCarsResult = $conn->prepare($rentedCarsSql);
+            $rentedCarsResult->execute($rentedCarsValues);
+
+            if ($rentedCarsResult->rowCount() > 0) {
+                
+            } else {
+             
+            }
+
            
-        );
-
-        $carResult = $conn->prepare($carSql);
-        $carResult->execute($carValues);
-
-        $carID = $conn->lastInsertId();
-
-        if ($carResult->rowCount() > 0) {
-            echo "Car record has been saved!";
-        } else {
-            echo "No car record has been saved!";
-        }
-
-
-        $carInfoSql = "INSERT INTO tblcar_info (carID, horsepower, engine_, transmission, seatcap, fueltype) VALUES (:carID, :horsepower, :engine, :transmission, :seatcap, :fueltype)";
-        $carInfoValues = array(
-            ":carID" => $carID,
-            ":horsepower" => $horsepower,
-            ":engine" => $engine,
-            ":transmission" => $transmission,
-            ":seatcap" => $seatcap,
-            ":fueltype" => $fueltype
-        );
-
-        $carInfoResult = $conn->prepare($carInfoSql);
-        $carInfoResult->execute($carInfoValues);
-
-        if ($carInfoResult->rowCount() > 0) {
-            echo "Car info record has been saved!";
-        } else {
-            echo "No car info record has been saved!";
-        }
-
-      
-        $rentedCarsSql = "INSERT INTO rented_cars (car_id, user_id) VALUES (:carID, :userID)";
-        $rentedCarsValues = array(
-            ":carID" => $carID,
-            ":userID" => $_SESSION["id"] 
-        );
-
-        $rentedCarsResult = $conn->prepare($rentedCarsSql);
-        $rentedCarsResult->execute($rentedCarsValues);
-
-        if ($rentedCarsResult->rowCount() > 0) {
-        } else {
+            header("location: cars.php");
+            exit();
+         } else {
+            echo "Error uploading the image.";
         }
     }
 }
 ?>
 
 <html>
-	<head>
-		<title>New Record</title>
-	</head>
-<body>
+<head>
+    <title>New Record</title>
+</head>
 
+<body>
 <div class="image-container">
-  <div class="overlay-image"></div>
+    <div class="overlay-image"></div>
 </div>
 
-<form action="add_car.php" method="POST">
+<form action="add_car.php" method="POST" enctype="multipart/form-data">
     <label>Brand:</label>
     <input type="text" name="brand"><br/>
 
@@ -114,7 +122,10 @@ if (isset($_POST["btnSave"])) {
     <label>Plate Number:</label>
     <input type="text" name="plateNum"><br/>
 
-    <label><h2>CAR INFORMATIONS</h2></label>
+    <label>Image:</label>
+    <input type="file" name="image"><br/>
+
+    <label><h2>CAR INFORMATION</h2></label>
     <label>Horsepower:</label>
     <input type="text" name="horsepower"><br/>
 
@@ -133,5 +144,10 @@ if (isset($_POST["btnSave"])) {
     <button type="submit" name="btnSave">Save Changes</button>
 </form>
 
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
 </body>
 </html>
