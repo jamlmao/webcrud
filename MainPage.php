@@ -53,7 +53,7 @@
 
 
         <div class="logout-container">
-        <a class="logout-button" href="MainPage.php?logout=<?php echo $_SESSION["id"]; ?>">LOG OUT</a>
+        <a class="logout-button" href=".php?logout=<?php echo $_SESSION["id"]; ?>">LOG OUT</a>
         </div>
     </section>
 
@@ -68,7 +68,7 @@
                 $rentedCarsSql = "SELECT c.id, c.brand, c.model, c.plateNum, c.image, u.username,u.contactinfo, c.status_
                             FROM tblcar c
                             LEFT JOIN rented_cars rc ON c.id = rc.car_id
-                            LEFT JOIN tbluser u ON rc.user_id = u.id";
+                            LEFT JOIN tbluser u ON rc.Rid = u.id";
 
                 $rentedCarsResult = $conn->query($rentedCarsSql);
                 $rentedCars = $rentedCarsResult->fetchAll(PDO::FETCH_ASSOC);
