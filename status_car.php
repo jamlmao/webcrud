@@ -11,7 +11,7 @@ require("dbconnect.php");
 $pendingCarsSql = "SELECT c.id, c.brand, c.model, c.plateNum, c.image, u.username, c.status_
             FROM tblcar c
             INNER JOIN rented_cars rc ON c.id = rc.car_id
-            INNER JOIN tbluser u ON rc.car_id = u.id
+            INNER JOIN tbluser u ON rc.user_id = u.id
             WHERE c.status_ = 'Pending'";
 
 $pendingCarsResult = $conn->query($pendingCarsSql);
