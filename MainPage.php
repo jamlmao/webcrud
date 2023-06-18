@@ -66,7 +66,7 @@
 
 
                 $rentedCarsSql = " SELECT c.id, c.brand, c.model, c.plateNum, c.image, u.username,u.contactinfo, c.status_ 
-                FROM tblcar c LEFT JOIN tbluser u ON c.id = u.id; ";
+                FROM tblcar c LEFT JOIN tbluser u ON c.id = u.id;  ";
 
                 $rentedCarsResult = $conn->query($rentedCarsSql);
                 $rentedCars = $rentedCarsResult->fetchAll(PDO::FETCH_ASSOC);
