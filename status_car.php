@@ -8,7 +8,7 @@ if (!isset($_SESSION["id"])) {
 
 require("dbconnect.php");
 
-$pendingCarsSql = "SELECT c.brand, c.model, c.plateNum, c.image, u.username,c.status_
+$pendingCarsSql = "SELECT c.id, c.brand, c.model, c.plateNum, c.image, u.username, c.status_
             FROM tblcar c
             INNER JOIN rented_cars rc ON c.id = rc.car_id
             INNER JOIN tbluser u ON rc.car_id = u.id
@@ -16,6 +16,33 @@ $pendingCarsSql = "SELECT c.brand, c.model, c.plateNum, c.image, u.username,c.st
 
 $pendingCarsResult = $conn->query($pendingCarsSql);
 $pendingCars = $pendingCarsResult->fetchAll(PDO::FETCH_ASSOC);
+
+// Handle status update
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["car_id"]) && isset($_POST["status"])) {
+        $carId = $_POST["car_id"];
+        $status = $_POST["status"];
+
+       
+        $updateStatusSql = "UPDATE tblcar SET status_ = :status WHERE id = :car_id";
+        $stmt = $conn->prepare($updateStatusSql);
+        $stmt->bindParam(":status", $status);
+        $stmt->bindParam(":car_id", $carId);
+        $stmt->execute();
+
+       
+        if ($status == "Rejected") {
+            $updateAvailabilitySql = "UPDATE tblcar SET status_ = 'Available' WHERE id = :car_id";
+            $stmt = $conn->prepare($updateAvailabilitySql);
+            $stmt->bindParam(":car_id", $carId);
+            $stmt->execute();
+        }
+
+        
+
+
+    }
+}
 ?>
 
 <html>
@@ -38,6 +65,7 @@ $pendingCars = $pendingCarsResult->fetchAll(PDO::FETCH_ASSOC);
         <th>User Name</th>
         <th>Image</th>
         <th>Status</th>
+        <th>Action</th>
     </tr>
     <?php foreach ($pendingCars as $car) { ?>
         <tr>
@@ -47,6 +75,16 @@ $pendingCars = $pendingCarsResult->fetchAll(PDO::FETCH_ASSOC);
             <td><?php echo $car["username"]; ?></td>
             <td><img src="data:image/jpeg;base64,<?php echo base64_encode($car["image"]); ?>" width="100px" height="100px"></td>
             <td><?php echo $car["status_"]; ?></td>
+            <td>
+                <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+                    <input type="hidden" name="car_id" value="<?php echo $car["id"]; ?>">
+                    <select name="status">
+                        <option value="Approved" <?php if ($car["status_"] == "Approved") echo "selected"; ?>>Approved</option>
+                        <option value="Rejected" <?php if ($car["status_"] == "Rejected") echo "selected"; ?>>Rejected</option>
+                    </select>
+                    <input type="submit" value="Update">
+                </form>
+            </td>
         </tr>
     <?php } ?>
 </table>

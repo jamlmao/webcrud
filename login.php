@@ -19,7 +19,7 @@ if (isset($_POST["btnLogin"])) {
             if ($user['accounttype'] == 'Admin') {
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['username'] = $username;
-                header("Location:cars.php");
+                header("Location:MainPage.php");
                 exit();
             } 
         } else {
