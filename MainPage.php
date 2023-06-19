@@ -31,10 +31,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="index.js"></script>
     <title>MainPage</title>
 </head>
 
-<body>
+<body onload="loadChartData()">
     <header class="header"><h1><center>RENT N GO RENTAL SERVICES</center></h1></header>
     <section class="sidebar">
         <?php
@@ -62,6 +64,16 @@
 
     <main class="main">
         <div class="card">
+            <div class="chart-container">
+            <center><h1>Cars Status</h1></center>
+                 <canvas id="myChart"></canvas>
+            <center><h1>Number of Rentals</h1></center>
+                <canvas id="myChart2"></canvas>
+                </div>
+        </div>
+
+        <div class="card">
+        <center><h1>Rented Cars</h1></center>
             <?php
 
       $rentedCarsSql = "SELECT c.brand, c.model, c.plateNum, c.image, u.username, u.contactinfo, c.status_
@@ -74,11 +86,9 @@
                 $rentedCars = $rentedCarsResult->fetchAll(PDO::FETCH_ASSOC);
             ?>
 
-            <div class="image-container">
-                <div class="overlay-image"></div>
-            </div>
+           
 
-           <center><h1>Rented Cars</h1></center>
+          
 
             <table>
                 <tr>
@@ -88,7 +98,7 @@
                     <th>Contact Number</th>
                     <th>Renter</th>
                     <th>Image</th>
-                    <th>Status</th>
+                    
                 </tr>
                 <?php foreach ($rentedCars as $car) { ?>
                     <tr>
@@ -98,14 +108,14 @@
                         <td><?php echo ($car["status_"] != "Available") ? $car["contactinfo"] : ""; ?></td>
                         <td><?php echo ($car["status_"] != "Available") ? $car["username"] : ""; ?></td>
                         <td><img src="data:image/jpeg;base64,<?php echo base64_encode($car["image"]); ?>" width="150px" height="100px"></td>
-                        <td><?php echo $car["status_"]; ?></td>
                     </tr>
                 <?php } ?>
             </table>
         </div>
 
-        <div class="card">PIE CHART HERE</div>
+       
     </main>
+  
 </body>
 
 </html>

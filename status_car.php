@@ -8,7 +8,7 @@ if (!isset($_SESSION["id"])) {
 
 require("dbconnect.php");
 
-$pendingCarsSql = "SELECT c.id, c.brand, c.model, c.plateNum, c.image, u.username, c.status_
+$pendingCarsSql = "SELECT c.id, c.brand, c.model, c.plateNum, c.image, u.username, c.status_, c.approval_count
             FROM tblcar c
             INNER JOIN rented_cars rc ON c.id = rc.car_id
             INNER JOIN tbluser u ON rc.user_id = u.id
@@ -23,24 +23,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $carId = $_POST["car_id"];
         $status = $_POST["status"];
 
-       
         $updateStatusSql = "UPDATE tblcar SET status_ = :status WHERE id = :car_id";
         $stmt = $conn->prepare($updateStatusSql);
         $stmt->bindParam(":status", $status);
         $stmt->bindParam(":car_id", $carId);
         $stmt->execute();
 
-       
-        if ($status == "Rejected") {
+        if ($status == "Approved") {
+            // Increment approval_count
+            $incrementCountSql = "UPDATE tblcar SET approval_count = approval_count + 1 WHERE id = :car_id";
+            $stmt = $conn->prepare($incrementCountSql);
+            $stmt->bindParam(":car_id", $carId);
+            $stmt->execute();
+        } elseif ($status == "Rejected") {
             $updateAvailabilitySql = "UPDATE tblcar SET status_ = 'Available' WHERE id = :car_id";
             $stmt = $conn->prepare($updateAvailabilitySql);
             $stmt->bindParam(":car_id", $carId);
             $stmt->execute();
         }
-
-        
-
-
     }
 }
 ?>
@@ -65,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <th>User Name</th>
         <th>Image</th>
         <th>Status</th>
+        <th>Approval Count</th>
         <th>Action</th>
     </tr>
     <?php foreach ($pendingCars as $car) { ?>
@@ -75,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <td><?php echo $car["username"]; ?></td>
             <td><img src="data:image/jpeg;base64,<?php echo base64_encode($car["image"]); ?>" width="100px" height="100px"></td>
             <td><?php echo $car["status_"]; ?></td>
+            <td><?php echo $car["approval_count"]; ?></td>
             <td>
                 <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
                     <input type="hidden" name="car_id" value="<?php echo $car["id"]; ?>">

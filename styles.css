@@ -1,6 +1,6 @@
 
 body {
-    height: 100vh;
+    
     display: grid;
     grid-template-columns: 250px 1fr;
     grid-template-rows: 60px 1fr;
@@ -23,13 +23,15 @@ body {
 .main {
     background-color: #2D3142;
     grid-area: main;
-    display: inline-block;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    display: block;
+    grid-template-columns: 200px 1fr 1fr ; 
+    grid-template-rows:  100px 1fr 1fr;
     gap:20px;
     padding: 20px;
     height: 100vh;
 }
+
+
 
 .card  {
     background-color: #D8D5DB;
@@ -39,24 +41,21 @@ body {
     height: 50vh;
     overflow: hidden;
     overflow-y: scroll;
-    
-}
-.image-container {
-    position: relative;
-    width: 100%;
-    background-image: url("path/to/image.jpg");
-    background-size: cover;
-    background-position: center;
+   
 }
 
-.overlay-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+.chart-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 140vh;
+    height: 50vh;
+    
 }
+
+
+
+
 
 h1 {
     font-family: 'Roboto Condensed', sans-serif;
@@ -170,4 +169,6 @@ img {
   .logout-button:hover {
     background-color: #e63946;
   }
+  
+
   
