@@ -64,9 +64,11 @@
         <div class="card">
             <?php
 
-
-                $rentedCarsSql = " SELECT c.id, c.brand, c.model, c.plateNum, c.image, u.username,u.contactinfo, c.status_ 
-                FROM tblcar c LEFT JOIN tbluser u ON c.id = u.id;  ";
+      $rentedCarsSql = "SELECT c.brand, c.model, c.plateNum, c.image, u.username, u.contactinfo, c.status_
+                FROM tblcar c
+                LEFT JOIN rented_cars rc ON c.id = rc.car_id
+                LEFT JOIN tbluser u ON rc.user_id = u.id
+                GROUP BY c.id";
 
                 $rentedCarsResult = $conn->query($rentedCarsSql);
                 $rentedCars = $rentedCarsResult->fetchAll(PDO::FETCH_ASSOC);
