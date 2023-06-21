@@ -66,6 +66,7 @@ $pendingCars = $pendingCarsResult->fetchAll(PDO::FETCH_ASSOC);
             color: #2D3142;
             font-family: 'Roboto', sans-serif;
             font-size: 20px;
+            height: 100vh;
         }
 
         
@@ -79,6 +80,7 @@ $pendingCars = $pendingCarsResult->fetchAll(PDO::FETCH_ASSOC);
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background-color: #D8D5DB;
         }
 
         th, td {
@@ -95,6 +97,9 @@ $pendingCars = $pendingCarsResult->fetchAll(PDO::FETCH_ASSOC);
 
         tr:nth-child(even) {
             background-color: #D8D5DB;
+        }
+        tr:nth-child(odd) {
+            background-color: #48639C;
         }
 
         form {
@@ -144,15 +149,7 @@ $pendingCars = $pendingCarsResult->fetchAll(PDO::FETCH_ASSOC);
             color: inherit;
         }
      
-        .approved {
-            background-color: green;
-            color: white;
-        }
-
-        .rejected {
-            background-color: red;
-            color: white;
-        }
+       
 
         .update-button {
             background-color: #ADACB5;
