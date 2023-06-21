@@ -81,6 +81,8 @@ function loadChartData(){
 
   xhttp2.open("GET", "car_rented_pie.php", true);
   xhttp2.send();
+
+
 }
 
 

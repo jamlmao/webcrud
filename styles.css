@@ -1,6 +1,5 @@
-
 body {
-    
+    height: 100vh;
     display: grid;
     grid-template-columns: 250px 1fr;
     grid-template-rows: 60px 1fr;
@@ -8,61 +7,97 @@ body {
         "side header"
         "side main";
     font-family: 'Roboto';
-    
 }
-
 
 .header {
     background-color: #ADACB5;
     grid-area: header;
 }
 
-
-
-
 .main {
     background-color: #2D3142;
     grid-area: main;
     display: block;
-    grid-template-columns: 200px 1fr 1fr ; 
-    grid-template-rows:  100px 1fr 1fr;
-    gap:20px;
     padding: 20px;
     height: 100vh;
 }
 
-
-
-.card  {
+.card {
     background-color: #D8D5DB;
     border-radius: 1px;
     margin: 10px;
-    width: 140vh;
-    height: 50vh;
     overflow: hidden;
     overflow-y: scroll;
-   
 }
 
-.chart-container{
+.chart-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    width: 140vh;
     height: 50vh;
-    
+}
+
+.chart-title {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.sidebar {
+    background-color: #48639C;
+    grid-area: side;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.sidebar h3 {
+    text-align: center;
+    color: #ADACB5;
 }
 
 
-
-
-
-h1 {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
+.sidebar button {
+    background-color: #ADACB5;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
     color: #2D3142;
-    
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar button:hover {
+    background-color: #2D3142;
+    color: #FFFFFF;
+}
+
+.logout-container {
+    margin-right: 40px;
+    margin-top: 10px;
+}
+
+.logout-button {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #6b1d1d;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #e63946;
 }
 
 table {
@@ -71,8 +106,7 @@ table {
     border-collapse: collapse;
 }
 
-th,
-td {
+th, td {
     padding: 10px;
     text-align: center;
     font-family: 'Roboto', sans-serif;
@@ -93,82 +127,65 @@ img {
     height: auto;
 }
 
-
 .card::-webkit-scrollbar {
     width: 1px;
-  }
-  
-  .card::-webkit-scrollbar-track {
+}
+
+.card::-webkit-scrollbar-track {
     background: #D8D5DB;
-  }
-  
-  .card::-webkit-scrollbar-thumb {
+}
+
+.card::-webkit-scrollbar-thumb {
     background: #888;
-  }
-  
-  .card::-webkit-scrollbar-thumb:hover {
+}
+
+.card::-webkit-scrollbar-thumb:hover {
     background: #555;
-  }
-
-  
-.sidebar {
-    background-color: #48639C;
-    grid-area: side;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
 }
 
-.sidebar a {
-    text-decoration: none;
-    margin-bottom: 10px;
+@media only screen and (max-width: 768px) {
+    body {
+        display: block;
+    }
+
+    .header {
+        font-size: 24px;
+    }
+
+    .sidebar {
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .main {
+        display: block;
+        padding: 10px;
+    }
+
+    .card {
+        max-width: 100%;
+        max-height: 75vh;
+        overflow: scroll;
+    }
+
+    .chart-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .logout-container {
+        margin-top: 10px;
+    }
 }
-.sidebar h1 {
-    text-decoration: none;
-    text-align: center;
+
+@media only screen and (max-width: 480px) {
+    .card {
+        max-height: 50vh;
+    }
+
+    table {
+        font-size: 12px;
+    }
 }
-
-
-.sidebar button {
-    background-color: #ADACB5;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    color: #2D3142;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar button:hover {
-    background-color: #2D3142;
-    color: #FFFFFF;
-}
-
-.logout-container {
-    margin-right: 40px;
-    margin-top: 420px;
-  }
-  
-  .logout-button {
-    display: block;
-    width: 100%;
-    padding: 10px 20px;
-    background-color:#6b1d1d;
-    color: #fff;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: 700;
-    transition: background-color 0.3s ease;
-  }
-  
-  .logout-button:hover {
-    background-color: #e63946;
-  }
-  
-
-  

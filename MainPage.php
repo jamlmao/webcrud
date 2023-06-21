@@ -38,6 +38,7 @@
 
 <body onload="loadChartData()">
     <header class="header"><h1><center>RENT N GO RENTAL SERVICES</center></h1></header>
+
     <section class="sidebar">
         <?php
         
@@ -45,14 +46,16 @@
 
         ?>
 
-        <h1>
-            Hello Admin <span class="username"><?php echo $username; ?>!</span>
-        </h1>
-    
-        <a href='add_car.php'><button>Add Car</button></a>
-        <a href='status_car.php'><button>Requested Cars</button></a>
-        <a href='status_car.php'><button>Rejected Request</button></a>
-
+        <h3>
+            Hello <span class="username"><?php echo $username; ?>!</span>
+        </h3>
+        
+      
+            <a href='cars.php'><button>Manage Car</button></a>
+            <a href='status_car.php'><button>Requested Cars</button></a>
+            <a href='rejectedCars.php'><button>Rejected Request</button></a>
+            <a href='car_history.php'><button>User History</button></a>
+      
 
         <div class="logout-container">
         <a class="logout-button" href=".php?logout=<?php echo $_SESSION["id"]; ?>">LOG OUT</a>
@@ -64,15 +67,19 @@
 
     <main class="main">
         <div class="card">
+            <div class="chart-title">
+                <center><h1>Cars Status</h1></center>
+                <center><h1>Number of Rentals</h1></center>
+            </div>
+            <hr>
             <div class="chart-container">
-            <center><h1>Cars Status</h1></center>
-                 <canvas id="myChart"></canvas>
-            <center><h1>Number of Rentals</h1></center>
+                <canvas id="myChart"></canvas>
                 <canvas id="myChart2"></canvas>
-                </div>
+            </div>
         </div>
 
         <div class="card">
+     
         <center><h1>Rented Cars</h1></center>
             <?php
 
@@ -100,6 +107,7 @@
                     <th>Image</th>
                     
                 </tr>
+                <hr>
                 <?php foreach ($rentedCars as $car) { ?>
                     <tr>
                         <td><?php echo $car["brand"]; ?></td>
