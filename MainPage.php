@@ -3,7 +3,7 @@
         session_start();
 
             if (!isset($_SESSION["id"])) {
-                header("location: login.php");
+                header("location:login.php");
                 exit();
             }
 
@@ -11,7 +11,7 @@
 
             if(isset($_REQUEST["logout"])){
                 session_destroy();
-                header("location: login.php");
+                header("location:login.php");
                 exit();
             }
 
@@ -49,16 +49,16 @@
         <h3>
             Hello <span class="username"><?php echo $username; ?>!</span>
         </h3>
-        
-      
-            <a href='cars.php'><button>Manage Car</button></a>
-            <a href='status_car.php'><button>Requested Cars</button></a>
-            <a href='rejectedCars.php'><button>Rejected Request</button></a>
-            <a href='car_history.php'><button>User History</button></a>
-      
+            <div class="sidebar-btn">
+                <a href='cars.php'><button>Manage Car</button></a>
+                <a href='status_car.php'><button>Requested Cars</button></a>
+                <a href='rejectedCars.php'><button>Rejected Request</button></a>
+                <a href='car_history.php'><button>User History</button></a>
+            </div>
+           
 
         <div class="logout-container">
-        <a class="logout-button" href=".php?logout=<?php echo $_SESSION["id"]; ?>">LOG OUT</a>
+        <a class="logout-button" href="MainPage.php?logout=<?php echo $_SESSION["id"]; ?>">LOG OUT</a>
         </div>
     </section>
 
@@ -94,7 +94,9 @@
             ?>
 
            
+            <div class="table-container">
 
+            </div>
           
 
             <table>
@@ -123,7 +125,203 @@
 
        
     </main>
+
+
+
+<style>
+    
+body {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 60px 1fr;
+    grid-template-areas: 
+        "side header"
+        "side main";
+    font-family: 'Roboto';
+    
+}
+
+
+.header {
+    background-color: #ADACB5;
+    grid-area: header;
+}
+
+
+
+
+.main {
+    background-color: #2D3142;
+    grid-area: main;
+    display: block;
+    grid-template-columns: 200px 1fr 1fr ; 
+    grid-template-rows:  100px 1fr 1fr;
+    gap:20px;
+    padding: 20px;
+    height: 140vh;
+}
+
+
+
+.card  {
+    background-color: #D8D5DB;
+    border-radius: 1px;
+    margin: 10px;
+    width: 140vh;
+    height: 70vh;
+    overflow: hidden;
+    overflow-y: scroll;
+   
+}
+
+.chart-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 140vh;
+    height: 50vh;
+    
+}
+
+.chart-title {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+
+h3 {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: white;
+    
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    
+}
+
+th,td {
+    padding: 10px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #2D3142;
+    border-bottom: 1px solid #D8D5DB;
+}
+
+th {
+    font-weight: 700;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+}
+
+
+.card::-webkit-scrollbar {
+    width: 1px;
+  }
   
+  .card::-webkit-scrollbar-track {
+    background: #D8D5DB;
+  }
+  
+  .card::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  .card::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  
+.sidebar {
+    background-color: #48639C;
+    grid-area: side;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+
+.sidebar-btn{
+    margin-top:100px ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sidebar a {
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+
+.sidebar h3 {
+    text-decoration: none;
+    text-align: center;
+    color: #ADACB5;
+}
+
+
+.sidebar button {
+    background-color: #ADACB5;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    color: #2D3142;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar button:hover {
+    background-color: #2D3142;
+    color: #FFFFFF;
+}
+
+.logout-container {
+    margin-right: 40px;
+    margin-top: 400px;
+  }
+  
+  .logout-button {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    background-color:#6b1d1d;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #e63946;
+  }
+  
+
+</style>
+
+
+
+
+
 </body>
 
 </html>

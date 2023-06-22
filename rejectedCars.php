@@ -32,7 +32,69 @@ $rejectedCars = $rejectedCarsResult->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
     <title>Rejected Cars</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    
+   <style>
+    body {
+            background-color: #ADACB5;
+            color: #2D3142;
+            font-family: 'Roboto', sans-serif;
+            font-size: 20px;
+            height: 100vh;
+        }
+
+        
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #D8D5DB;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #D8D5DB;
+        }
+
+        th {
+            background-color: #2D3142;
+            color: #D8D5DB;
+            
+        }
+
+        tr:nth-child(even) {
+            background-color: #D8D5DB;
+        }
+        tr:nth-child(odd) {
+            background-color: #48639C;
+        }
+
+        form {
+            display: inline;
+        }
+
+      
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #2D3142;
+            text-decoration: none;
+        }
+
+    </style> 
 </head>
+
 
 <body>
 <h1>Rejected Cars</h1>

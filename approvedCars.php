@@ -8,7 +8,7 @@ if (!isset($_SESSION["id"])) {
 
 require("dbconnect.php");
 
-// Retrieve all approved cars with user names
+
 $approvedCarsSql = "SELECT c.brand, c.model, c.plateNum, c.image, u.username
                     FROM tblcar c
                     INNER JOIN rented_cars rc ON c.id = rc.car_id
@@ -25,9 +25,6 @@ $approvedCars = $approvedCarsResult->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-<div class="image-container">
-    <div class="overlay-image"></div>
-</div>
 
 <h1>Approved Cars</h1>
 

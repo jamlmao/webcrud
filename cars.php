@@ -67,7 +67,9 @@
             font-size: 50px;
             color: inherit;
         }
-
+        .footer-btn{
+            margin-left: 45%;
+        }
         
     </style>
 </head>
@@ -141,7 +143,7 @@
                 ?>
             </tbody>
         </table>
-        
+        <a href="add_car.php" class="footer-btn"><button>Add Car</button></a>
     </div>
 </body>
 </html>

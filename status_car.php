@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updateStatusSql = "UPDATE tblcar SET status_ = :status, is_rejected = $isRejected";
 
         if ($status == "Approved") {
-            $updateStatusSql .= ", approval_date = NOW()"; // Add the current date and time
+            $updateStatusSql .= ", approval_date = NOW()"; 
         }
 
         $updateStatusSql .= " WHERE id = :car_id";
