@@ -198,10 +198,10 @@ $pendingCars = $pendingCarsResult->fetchAll(PDO::FETCH_ASSOC);
                 <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
                     <input type="hidden" name="car_id" value="<?php echo $car["id"]; ?>">
                     <select name="status">
-                        <option value="Approved" <?php if ($car["status_"] == "Approved") echo "selected"; ?>>Approved</option>
-                        <option value="Rejected" <?php if ($car["status_"] == "Rejected") echo "selected"; ?>>Rejected</option>
+                        <option value="Approve" <?php if ($car["status_"] == "Approved") echo "selected"; ?>>Approve</option>
+                        <option value="Reject" <?php if ($car["status_"] == "Rejected") echo "selected"; ?>>Reject</option>
                     </select>
-                    <input type="submit" value="Confirm" class="update-button <?php echo ($car["status_"] == "Approved") ? "Approved" : "Rejected"; ?>">
+                    <input type="submit" value="Confirm" class="update-button <?php echo ($car["status_"] == "Approve") ? "Approve" : "Reject"; ?>">
                 </form>
             </td>
         </tr>

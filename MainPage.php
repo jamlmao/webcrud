@@ -253,6 +253,7 @@ img {
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    position: relative;
 }
 
 
@@ -296,6 +297,7 @@ img {
 .logout-container {
     margin-right: 40px;
     margin-top: 400px;
+    position: relative;
   }
   
   .logout-button {
@@ -309,6 +311,8 @@ img {
     border-radius: 5px;
     font-weight: 700;
     transition: background-color 0.3s ease;
+    position: sticky;
+    bottom: 0;
   }
   
   .logout-button:hover {

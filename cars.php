@@ -1,3 +1,19 @@
+<?php 
+     session_start();
+     try {
+         if (!isset($_SESSION["id"])) {
+             header("location: login.php");
+             exit();
+         }
+
+         require("dbconnect.php");
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,15 +107,7 @@
             </thead>
             <tbody>
                 <?php
-                session_start();
-                try {
-                    if (!isset($_SESSION["id"])) {
-                        header("location: login.php");
-                        exit();
-                    }
-    
-                    require("dbconnect.php");
-    
+                
                     $sql = "SELECT id, brand, model,status_, image FROM tblcar";
                     $result = $conn->prepare($sql);
                     $result->execute();
@@ -117,9 +125,9 @@
                              echo   "<a href='edit_car.php?id=" . $row["id"] . "'><button style='margin-left:1%; width:150px;'>Edit</button></a> |
                                 <a href='view_car.php?id=" . $row["id"] . "'><button style='margin-left:1%; width:150px;'>View</button></a> |";
                           
-                          
-                                if ($row["status_"] === "Available") {
-                                echo "<button class='unavailable-button' disabled>Car is Available</button>";
+                                
+                                if ($row["status_"] === "Approved" || $row["status_"] === "Pending") {
+                                echo "<button class='unavailable-button' disabled>Button Disabled</button>";
                             } else {
                                 echo "
                                     <form method='POST' action='update_status.php' style='display: inline;'>
